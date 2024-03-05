@@ -1,0 +1,74 @@
+{
+  "components": [
+    {
+      "type": "VContainer",
+      "id": "root",
+      "props": {},
+      "class": "bg-surface-variant",
+      "children": [
+        {
+          "type": "VRow",
+          "id": "row1",
+          "children": [
+            {
+              "type": "VCol",
+              "id": "col1",
+              "children": ["Col 1"]
+            },
+            {
+              "type": "VCol",
+              "id": "col2",
+              "children": ["Col 2"]
+            },
+            {
+              "type": "VCol",
+              "id": "col3",
+              "children": ["Col 3"]
+            }
+          ]
+        },
+        {
+          "type": "VRow",
+          "id": "row2",
+          "children": [
+            {
+              "type": "VBtn",
+              "id": "btn1",
+              "children": ["Button 1"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "VCarousel",
+      "id": "carousel1",
+      "children": [
+        {
+          "type": "VCarouselItem",
+          "id": "item1",
+          "props": {
+            "src": "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+            "cover": true
+          }
+        },
+        {
+          "type": "VCarouselItem",
+          "id": "item2",
+          "props": {
+            "src": "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+            "cover": true
+          }
+        },
+        {
+          "type": "VCarouselItem",
+          "id": "item3",
+          "props": {
+            "src": "https://cdn.vuetifyjs.com/images/cards/hotel.jpg",
+            "cover": true
+          }
+        }
+      ]
+    }
+  ]
+}
