@@ -9,6 +9,7 @@
     :is="components[objectComponent.type]"
     :class="objectComponent.class"
     v-bind="objectComponent.props"
+    v-on="events"
   >
     <JsonComponent
       :json="objectComponent.children"
@@ -19,8 +20,7 @@
     {{ plainTextComponent }}
   </template>
 </template>
-<script setup lang="ts">
-import { defineProps } from "vue";
+<script setup lang="ts" async>
 import * as VuetifyComponents from "vuetify/components";
 
 const components: Record<string, any> = {
@@ -31,7 +31,7 @@ const { json } = defineProps<{
   json: Object | string;
 }>();
 
-let objectComponent, arrayComponents, plainTextComponent;
+let objectComponent, arrayComponents, plainTextComponent, events;
 
 switch (typeof json) {
   case "string":
@@ -46,5 +46,18 @@ switch (typeof json) {
     break;
   default:
     throw new Error("Invalid JSON");
+}
+
+if (objectComponent) {
+  events = {};
+  const promises = (objectComponent.events ?? []).map(async (event) => {
+    const lastSlash = event.handler.lastIndexOf(".");
+    const eventName = event.handler.slice(lastSlash + 1);
+    const path = event.handler.slice(0, lastSlash);
+    const moduleAtPath = await import(path);
+    const handler = moduleAtPath[eventName];
+    events[event.name] = handler;
+  });
+  await Promise.all(promises);
 }
 </script>

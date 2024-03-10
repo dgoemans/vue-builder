@@ -34,7 +34,13 @@
             {
               "type": "VBtn",
               "id": "btn1",
-              "children": ["Button 1"]
+              "children": ["Button 1"],
+              "events": [
+                {
+                  "name": "click",
+                  "handler": "/src/handlers/mainScreen.onBtn1Click"
+                }
+              ]
             }
           ]
         }
@@ -65,6 +71,14 @@
           "id": "item3",
           "props": {
             "src": "https://cdn.vuetifyjs.com/images/cards/hotel.jpg",
+            "cover": true
+          }
+        },
+        {
+          "type": "VCarouselItem",
+          "id": "item4",
+          "props": {
+            "src": "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
             "cover": true
           }
         }

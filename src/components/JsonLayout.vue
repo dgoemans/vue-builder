@@ -1,8 +1,9 @@
 <template>
-  <JsonComponent :json="layout.components" />
+  <Suspense>
+    <JsonComponent :json="layout.components" />
+  </Suspense>
 </template>
 <script setup lang="ts">
-import { defineProps } from "vue";
 import JsonComponent from "./JsonComponent.vue";
 
 const { layout } = defineProps<{
