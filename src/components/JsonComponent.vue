@@ -22,6 +22,7 @@
 </template>
 <script setup lang="ts" async>
 import * as VuetifyComponents from "vuetify/components";
+import { ObjectComponent } from "./types";
 
 const components: Record<string, any> = {
   ...VuetifyComponents,
@@ -31,7 +32,10 @@ const { json } = defineProps<{
   json: Object | string;
 }>();
 
-let objectComponent, arrayComponents, plainTextComponent, events;
+let objectComponent: ObjectComponent | undefined,
+  arrayComponents: ObjectComponent[] = [],
+  plainTextComponent: string | undefined,
+  events: Record<string, Function> = {};
 
 switch (typeof json) {
   case "string":
@@ -41,7 +45,7 @@ switch (typeof json) {
     if (Array.isArray(json)) {
       arrayComponents = json;
     } else {
-      objectComponent = json;
+      objectComponent = json as ObjectComponent;
     }
     break;
   default:
@@ -49,7 +53,6 @@ switch (typeof json) {
 }
 
 if (objectComponent) {
-  events = {};
   const promises = (objectComponent.events ?? []).map(async (event) => {
     const lastSlash = event.handler.lastIndexOf(".");
     const eventName = event.handler.slice(lastSlash + 1);
