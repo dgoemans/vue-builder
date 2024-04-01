@@ -57,6 +57,7 @@ if (objectComponent) {
     const lastSlash = event.handler.lastIndexOf(".");
     const eventName = event.handler.slice(lastSlash + 1);
     const path = event.handler.slice(0, lastSlash);
+    /* @vite-ignore */
     const moduleAtPath = await import(path);
     const handler = moduleAtPath[eventName];
     events[event.name] = handler;
