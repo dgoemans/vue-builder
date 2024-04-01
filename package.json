@@ -2,8 +2,10 @@
   "name": "vue-builder",
   "version": "0.0.0",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--no-warnings' vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "app:dev": "cross-env NODE_OPTIONS='--no-warnings' vite --config vite.app.config.mts",
+    "editor:dev": "cross-env NODE_OPTIONS='--no-warnings' vite --config vite.editor.config.mts",
+    "app:build": "vue-tsc --noEmit && vite  --config vite.app.config.mts build",
+    "editor:build": "vue-tsc --noEmit && vite  --config vite.editor.config.mts build",
     "preview": "vite preview"
   },
   "dependencies": {
