@@ -1,4 +1,5 @@
 {
+  "name": "MainScreen",
   "components": [
     {
       "type": "VContainer",

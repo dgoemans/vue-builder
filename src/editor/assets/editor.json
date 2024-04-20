@@ -1,0 +1,138 @@
+{
+  "name": "Editor",
+  "components": [
+    {
+      "type": "VCol",
+      "id": "root",
+      "props": {
+        "cols": 12
+      },
+      "class": "pa-0 fill-height d-flex flex-column",
+      "children": [
+        {
+          "type": "VRow",
+          "id": "header",
+          "class": "header flex-0-0 bg-indigo elevation-2",
+          "props": {
+            "align-self": "start",
+            "no-gutters": true
+          },
+          "children": [
+            {
+              "type": "VCol",
+              "id": "header-col",
+              "class": "header-text",
+              "children": ["Header"]
+            }
+          ]
+        },
+        {
+          "type": "VRow",
+          "id": "menubar",
+          "class": "flex-0-0 bg-indigo elevation-2 menubar",
+          "props": {
+            "align-self": "start",
+            "no-gutters": true
+          },
+          "children": [
+            {
+              "type": "VBtn",
+              "id": "btn1",
+              "children": ["Open Layout"],
+              "props": {
+                "variant": "text",
+                "height": 16,
+                "size": "x-small"
+              },
+              "events": [
+                {
+                  "name": "click",
+                  "handler": "/src/editor/handlers/menu.openFile"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "VRow",
+          "id": "content",
+          "class": "flex-1-1 flex-nowrap",
+          "props": {
+            "align-self": "center",
+            "no-gutters": true
+          },
+          "children": [
+            {
+              "type": "VCol",
+              "id": "col0",
+              "class": "bg-indigo-lighten-1 elevation-2 sidebar",
+              "props": {},
+              "children": ["Col 0"]
+            },
+            {
+              "type": "VRow",
+              "id": "content",
+              "class": "flex-1-1 flex-nowrap",
+              "props": {
+                "align-self": "center",
+                "no-gutters": true
+              },
+              "children": [
+                {
+                  "type": "VCol",
+                  "id": "col1",
+                  "class": "bg-indigo-lighten-3 elevation-2",
+                  "props": {
+                    "cols": 2
+                  },
+                  "children": ["Col 1"]
+                },
+                {
+                  "type": "VCol",
+                  "id": "col2",
+                  "class": "",
+                  "props": {
+                    "cols": 8
+                  },
+                  "children": [
+                    {
+                      "type": "JsonLayout",
+                      "id": "layout",
+                      "ref": "layout",
+                      "props": {}
+                    }
+                  ]
+                },
+                {
+                  "type": "VCol",
+                  "id": "col3",
+                  "class": "bg-indigo-lighten-3 elevation-2",
+                  "props": {
+                    "cols": 2
+                  },
+                  "children": ["Col 3"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "VRow",
+          "id": "footer",
+          "class": "footer flex-0-0 bg-indigo elevation-2",
+          "props": {
+            "align-self": "end",
+            "no-gutters": true
+          },
+          "children": [
+            {
+              "type": "VCol",
+              "id": "footer-col",
+              "children": ["Footer"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
