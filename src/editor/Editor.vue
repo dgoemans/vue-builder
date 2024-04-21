@@ -22,14 +22,14 @@ provide("editorService", editorService);
 
 editorService.addLayoutChangeListener((newLayout: Object) => {
   const internalLayout = layoutService?.getComponent("layout");
-  if (!internalLayout || !internalLayout.component || !internalLayout.vue) {
-    return;
-  }
-  internalLayout.component.props = {
-    ...internalLayout.component.props,
+  internalLayout.updateProps({
     layout: newLayout,
-  };
-  internalLayout.vue.$forceUpdate();
+  });
+  internalLayout.updateClassNames("test-test");
+  editorComponent.value?.$forceUpdate();
+  editorComponent.value?.$parent?.$forceUpdate();
+  // internalLayout.instance?.$.update();
+  // internalLayout.instance?.root?.$forceUpdate();
 });
 </script>
 <style>

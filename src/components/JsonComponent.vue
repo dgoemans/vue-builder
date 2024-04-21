@@ -13,8 +13,8 @@
     v-on="events"
   >
     <JsonComponent
+      v-if="objectComponent.children && objectComponent.children.length"
       :json="objectComponent.children"
-      v-if="objectComponent.children"
     />
   </component>
   <template v-if="plainTextComponent">
@@ -33,63 +33,85 @@ import { LayoutService } from "@/services";
 const layoutService = inject<LayoutService>("layoutService");
 const component = ref<ComponentPublicInstance | null>(null);
 
+// TODO: Work out how to import external components here
 const components: Record<string, any> = {
   ...VuetifyComponents,
   JsonLayout,
 };
 
+const objectComponent = ref<ObjectComponent | undefined>(undefined);
+const arrayComponents = ref<ObjectComponent[]>([]);
+const plainTextComponent = ref<string | undefined>(undefined);
+const events = ref<Record<string, Function>>({});
+
 const { json } = defineProps<{
   json?: Object | string;
 }>();
-
-let objectComponent: ObjectComponent | undefined,
-  arrayComponents: ObjectComponent[] = [],
-  plainTextComponent: string | undefined,
-  events: Record<string, Function> = {};
 
 switch (typeof json) {
   case "undefined":
     break;
   case "string":
-    plainTextComponent = json;
+    plainTextComponent.value = json;
     break;
   case "object":
     if (Array.isArray(json)) {
-      arrayComponents = json;
+      arrayComponents.value = json;
     } else {
-      objectComponent = json as ObjectComponent;
+      objectComponent.value = json as ObjectComponent;
     }
     break;
   default:
     throw new Error("Invalid JSON");
 }
 
-if (objectComponent) {
-  const promises = (objectComponent.events ?? []).map(async (event) => {
+function updateProps(newProps: Record<string, any>) {
+  if (objectComponent.value) {
+    objectComponent.value.props = newProps;
+  }
+  component.value?.$forceUpdate();
+}
+
+function updateClassNames(newClassNames: string) {
+  if (objectComponent.value) {
+    objectComponent.value.class = newClassNames;
+  }
+  component.value?.$forceUpdate();
+}
+
+if (objectComponent.value) {
+  const promises = (objectComponent.value.events ?? []).map(async (event) => {
     const lastSlash = event.handler.lastIndexOf(".");
     const eventName = event.handler.slice(lastSlash + 1);
     const path = event.handler.slice(0, lastSlash);
     /* @vite-ignore */
     const moduleAtPath = await import(path);
     const handler = moduleAtPath[eventName];
-    events[event.name] = handler;
+    events.value[event.name] = handler;
   });
 
   await Promise.all(promises);
   layoutService?.setComponent(
-    objectComponent.id,
-    objectComponent,
+    updateProps,
+    updateClassNames,
+    objectComponent.value,
     component.value
   );
 }
 
 watch(component, (newObjectComponent) => {
-  if (objectComponent) {
+  if (objectComponent.value) {
     layoutService?.setComponent(
-      objectComponent.id,
-      objectComponent,
-      newObjectComponent
+      updateProps,
+      updateClassNames,
+      objectComponent.value,
+      component.value
     );
   }
+});
+
+defineExpose({
+  updateProps,
+  updateClassNames,
 });
 </script>

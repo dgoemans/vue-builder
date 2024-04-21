@@ -4,17 +4,25 @@ import { ComponentPublicInstance } from "vue";
 export class LayoutService {
   components: {
     [id: string]: {
-      component: ObjectComponent;
-      vue: ComponentPublicInstance | null;
+      updateProps: (props: any) => void;
+      updateClassNames: (classNames: string) => void;
+      objectComponent: ObjectComponent;
+      instance: ComponentPublicInstance | null;
     };
   } = {};
 
   setComponent(
-    id: string,
-    component: ObjectComponent,
-    vue: ComponentPublicInstance | null
+    updateProps: (props: any) => void,
+    updateClassNames: (classNames: string) => void,
+    objectComponent: ObjectComponent,
+    instance: ComponentPublicInstance | null
   ): void {
-    this.components[id] = { component, vue };
+    this.components[objectComponent.id] = {
+      updateClassNames,
+      updateProps,
+      objectComponent,
+      instance,
+    };
   }
 
   getComponent(id: string) {
