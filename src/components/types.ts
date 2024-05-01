@@ -1,9 +1,11 @@
 export interface ObjectComponent {
+  id: string;
   type: string;
-  class: string;
-  props: Record<string, any>;
-  children: Object | string;
-  events: Array<{
+  class?: string;
+  ref?: string;
+  props?: Record<string, any>;
+  children?: (ObjectComponent | string)[];
+  events?: Array<{
     name: string;
     handler: string;
   }>;

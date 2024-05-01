@@ -3,6 +3,7 @@ import Components from "unplugin-vue-components/vite";
 import Vue from "@vitejs/plugin-vue";
 import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import ViteFonts from "unplugin-fonts/vite";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 
 // Utilities
 import { defineConfig } from "vite";
@@ -45,5 +46,9 @@ export default defineConfig({
   server: {
     port: 3001,
     open: "/editor.html",
+    https: {
+      cert: "../localhost.pem",
+      key: "../localhost-key.pem",
+    },
   },
 });
